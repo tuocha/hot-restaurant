@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
         integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery.js"></script>
     <title>hot restaurant</title>
 </head>
 
@@ -17,11 +18,11 @@
             <h4>Make Your Reservation</h4>
             <div class="text-center">
                 <a href="/tables.html">
-                    <button type="button" class="btn btn-lg btn-danger">
+                    <button type="button" class="btn btn-lg btn-danger" id="table-btn">
                         View Tables
                     </button></a>
                 <a href="/index.html">
-                    <button type="button" class="btn btn-lg btn-primary">
+                    <button type="button" class="btn btn-lg btn-primary" id="home-btn">
                         Home
                     </button></a>
             </div>
@@ -37,13 +38,19 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                  </div>
-                 <div class="form-group">
+                    <input type="email" class="form-control" id="email-form" aria-describedby="emailHelp"
+                        placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small>
+                </div>
+                <div class="form-group">
                     <label for="exampleID">User ID</label>
-                    <input type="user-id" class="form-control" id="user-form" aria-describedby="userHelp" placeholder="Enter User ID">
-                  </div>
+                    <input type="user-id" class="form-control" id="user-form" aria-describedby="userHelp"
+                        placeholder="Enter User ID">
+                </div>
+                <button class="submit-btn btn btn-lg btn-primary" id="submit-btn">
+                    Submit
+                </button>
             </form>
         </div>
         <div class="footer">
@@ -53,7 +60,21 @@
             </footer>
         </div>≈
     </div>
-
+    <script type="text/javascript">
+        $("#submit-btn").on("click", function (event) {
+            event.preventDefault();
+            var newReservation = {
+                name: $("#name-form").val().trim(),
+                phone: $("#phone-form").val().trim(),
+                email: $("#email-form").val().trim(),
+                user: $("#user-form").val().trim()
+            }
+            $.post("api/tables", newReservation)
+                .then(function (data) {
+                    console.log(data);
+                });
+        });
+    </script>
 </body>
 
 </html>
