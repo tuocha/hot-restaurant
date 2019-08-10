@@ -17,7 +17,7 @@ app.use(express.json());
 // data points
 // =============================================================
 const reservations = [
-    {
+    {   
         name: "tuocha",
         phone: 1231231234,
         email: "mushroom@gmail.com",
@@ -63,11 +63,11 @@ app.get("/tables", function (req, res) {
 });
 
 app.get("/api/tables", function (req, res) {
-    return res.json(waitlist)
+    return res.json(reservations)
 });
 
 app.get("/api/waitlist", function (req, res) {
-    return res.json(reservations)
+    return res.json(waitlist)
 });
 
 app.get("/reservation", function(req, res) {
@@ -79,10 +79,7 @@ app.post("/api/tables", function(req, res) {
     // req.body hosts is equal to the JSON post sent from the user
     // This works because of our body parsing middleware
     var newReservation = req.body;
-  
-    // Using a RegEx Pattern to remove spaces from newReservation
-    newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
-  
+    
     console.log(newReservation);
   
     reservations.push(newReservation);
@@ -92,8 +89,6 @@ app.post("/api/tables", function(req, res) {
 
 app.post("/api/waitlist", function(req, res) {
     var newWaitlist = req.body;
-  
-    newWaitlist.routeName = newWaitlist.name.replace(/\s+/g, "").toLowerCase();
   
     console.log(newWaitlist);
   
