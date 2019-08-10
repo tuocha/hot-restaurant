@@ -17,7 +17,7 @@ app.use(express.json());
 // data points
 // =============================================================
 const reservations = [
-    {   
+    {
         name: "tuocha",
         phone: 1231231234,
         email: "mushroom@gmail.com",
@@ -70,34 +70,39 @@ app.get("/api/waitlist", function (req, res) {
     return res.json(waitlist)
 });
 
-app.get("/reservation", function(req, res) {
+app.get("/reservation", function (req, res) {
     res.sendFile(path.join(__dirname, "../reservation.html"));
-   });
+});
 
 // create new reservation - takes in JSON input
-app.post("/api/tables", function(req, res) {
+app.post("/api/tables", function (req, res) {
     // req.body hosts is equal to the JSON post sent from the user
     // This works because of our body parsing middleware
     var newReservation = req.body;
-    
-    console.log(newReservation);
-  
-    reservations.push(newReservation);
-  
-    res.json(newReservation);
-  });
 
-app.post("/api/waitlist", function(req, res) {
-    var newWaitlist = req.body;
-  
-    console.log(newWaitlist);
-  
-    waitlist.push(newWaitlist);
-  
-    res.json(newWaitlist);
-  });
-  
+    console.log(newReservation);
+    if (reservations.length < 5) {
+        reservations.push(newReservation);
+        console.log('Added to reservation list.')
+    } else {
+        waitlist.push(newReservation)
+        console.log('Added to waitlist.')
+    }
+    res.json(newReservation);
+});
+
+//do we need?
+// app.post("/api/waitlist", function(req, res) {
+//     var newWaitlist = req.body;
+
+//     console.log(newWaitlist);
+
+//     waitlist.push(newWaitlist);
+
+//     res.json(newWaitlist);
+//   });
+
 // port listener
-app.listen(PORT, function() {
+app.listen(PORT, function () {
     console.log("App listening to : " + PORT)
 })
