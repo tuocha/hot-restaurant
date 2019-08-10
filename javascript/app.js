@@ -1,13 +1,12 @@
 // dependencies
 // =============================================================
-
 var express = require("express");
 var path = require("path");
 
 // Express setup
 // =============================================================
 var app = express();
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 // data parsing for Express
 // =============================================================
@@ -58,6 +57,11 @@ app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "../index.html"));
 });
 
+app.get("/reservation", function (req, res) {
+    res.sendFile(path.join(__dirname, "../reservation.html"));
+});
+
+
 app.get("/tables", function (req, res) {
     res.sendFile(path.join(__dirname, "../tables.html"));
 });
@@ -68,10 +72,6 @@ app.get("/api/tables", function (req, res) {
 
 app.get("/api/waitlist", function (req, res) {
     return res.json(waitlist)
-});
-
-app.get("/reservation", function (req, res) {
-    res.sendFile(path.join(__dirname, "../reservation.html"));
 });
 
 // create new reservation - takes in JSON input
